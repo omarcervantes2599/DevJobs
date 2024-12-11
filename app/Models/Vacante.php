@@ -9,14 +9,18 @@ class Vacante extends Model
 {
    use HasFactory;
 
-   protected $fillable=[
-    'titulo',
-    'salario_id',
-    'categoria_id',
-    'empresa',
-    'ultimo_dia',
-    'descripcion',
-    'imagen',
-    'user_id'
+   protected $casts = [
+      'ultimo_dia' => 'datetime',
+   ];
+
+   protected $fillable = [
+      'titulo',
+      'salario_id',
+      'categoria_id',
+      'empresa',
+      'ultimo_dia',
+      'descripcion',
+      'imagen',
+      'user_id'
    ];
 }
