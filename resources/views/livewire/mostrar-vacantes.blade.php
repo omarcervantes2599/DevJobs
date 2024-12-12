@@ -13,12 +13,15 @@
                     <a href="" class="bg-slate-800 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase">
                         Candidatos
                     </a>
-                    <a href="" class="bg-blue-800 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase">
+                    <a href="{{ route('vacantes.edit', $vacante->id) }}"
+                        class="bg-blue-800 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase">
                         Editar
                     </a>
-                    <a href="" class="bg-red-600 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase">
+                    <button onclick="confirmarEliminacion({{ $vacante->id }})"
+                        class="bg-red-600 rounded-lg px-4 text-white text-xs font-bold py-2 text-center">
                         Eliminar
-                    </a>
+                    </button>
+
                 </div>
             </div>
         @empty
@@ -29,3 +32,29 @@
         {{ $vacantes->links() }}
     </div>
 </div>
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmarEliminacion(vacanteId) {
+            Swal.fire({
+                title: "¿Eliminar vacante?",
+                text: "Una vacante eliminada no se puede recuperar!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar!",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('eliminarVacante', [vacanteId]);
+                    Swal.fire({
+                        title: "¡Vacante eliminada!",
+                        text: "Eliminada correctamente.",
+                        icon: "success",
+                    });
+                }
+            });
+        }
+    </script>
+@endpush
